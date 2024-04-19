@@ -2,7 +2,12 @@
     <div class="register-form">
         <h2>Create your account</h2>
         <v-text-field label="Email" v-model="email" type="email" />
-        <v-text-field label="Password" v-model="password" type="password" :rules="[passwordValidator]" />
+        <v-overlay v-model="isOverlayOpen" :scrim="false" location-strategy="connected" scroll-strategy="reposition">
+            <template #activator="{ props }">
+                <v-text-field label="Password" v-bind="props" v-model="password" type="password" :rules="[passwordValidator]" />
+            </template>
+            <chrome-nudge @selected="isOverlayOpen = false" />
+        </v-overlay>
         <v-text-field label="Confirm Password" v-model="confirmPassword" type="password" />
         <v-btn @click="register" color="primary">
             Register
@@ -13,6 +18,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import useState from '../composables/state'
+
+const isOverlayOpen = ref(false)
 
 const email = ref('')
 const password = ref('')
