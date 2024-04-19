@@ -41,7 +41,7 @@ function login() {
 
 .button-wrapper {
     display: flex;
-    flex-direction: column  ;
+    flex-direction: column;
     gap: 10px;
 }
 </style>
