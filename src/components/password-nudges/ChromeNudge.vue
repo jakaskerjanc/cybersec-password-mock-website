@@ -22,14 +22,16 @@
 </template>
 
 <script setup lang="ts">
+import { generateRandomPassword } from '../../composables/utils'
+
 const emit = defineEmits<{
-    selected: [value: string]
+  selected: [value: string]
 }>()
 
-const password = '34z*4f/j%DXYd'
+const password = generateRandomPassword()
 
 function emitPassword() {
-    emit('selected', password)
+  emit('selected', password)
 }
 </script>
 
@@ -41,50 +43,50 @@ function emitPassword() {
 @bottom-border-color: #5E5E5E;
 
 .chrome-nudge {
-    width: 500px;
-    height: 138px;
-    border-radius: 10px;
-    background-color: @background-black;
-    color: @white-text;
-    user-select: none;
+  width: 500px;
+  height: 138px;
+  border-radius: 10px;
+  background-color: @background-black;
+  color: @white-text;
+  user-select: none;
 }
 
 .top-row {
-    height: 56px;
-    padding-left: 16px;
-    display: flex;
-    border-bottom: 1px solid @bottom-border-color;
-    align-items: center;
+  height: 56px;
+  padding-left: 16px;
+  display: flex;
+  border-bottom: 1px solid @bottom-border-color;
+  align-items: center;
 
-    &:hover {
-        background-color: @background-hover-black;
-        border-radius: 10px 10px 0 0;
-    }
+  &:hover {
+    background-color: @background-hover-black;
+    border-radius: 10px 10px 0 0;
+  }
 }
 
 .top-text {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding-right: 24px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 24px;
 }
 
 .key-image {
-    width: 24px;
-    height: 24px;
-    color: @white-text;
-    margin-right: 16px;
+  width: 24px;
+  height: 24px;
+  color: @white-text;
+  margin-right: 16px;
 }
 
 .generated-password {
-    color: @gray-text;
+  color: @gray-text;
 }
 
 .bottom-row {
-    height: 82px;
-    padding-left: 16px;
-    display: flex;
-    align-items: center;
-    color: @gray-text;
+  height: 82px;
+  padding-left: 16px;
+  display: flex;
+  align-items: center;
+  color: @gray-text;
 }
 </style>
