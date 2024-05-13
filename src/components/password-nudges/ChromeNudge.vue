@@ -1,10 +1,10 @@
 <template>
     <div class="chrome-nudge">
-        <div class="top-row" @click="emits('selected')">
+        <div class="top-row" @click="emitPassword">
             <img class="key-image" src="/key.svg" />
             <div class="top-text">
                 <div>Use strong password</div>
-                <div class="generated-password">34z*4f/j%DXYd</div>
+                <div class="generated-password">{{ password }}</div>
             </div>
         </div>
         <div class="bottom-row">
@@ -14,7 +14,15 @@
 </template>
 
 <script setup lang="ts">
-const emits = defineEmits(['selected'])
+const emit = defineEmits<{
+    selected: [value: string]
+}>()
+
+const password = '34z*4f/j%DXYd'
+
+function emitPassword() {
+    emit('selected', password)
+}
 </script>
 
 <style scoped lang="less">

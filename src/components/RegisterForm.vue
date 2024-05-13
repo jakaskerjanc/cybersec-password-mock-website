@@ -4,9 +4,11 @@
         <v-text-field label="Email" v-model="email" type="email" />
         <v-overlay v-model="isOverlayOpen" :scrim="false" location-strategy="connected" scroll-strategy="reposition">
             <template #activator="{ props }">
-                <v-text-field label="Password" v-bind="props" v-model="password" type="password" :rules="[passwordValidator]" />
+                <v-text-field label="Password" v-bind="props" v-model="password"
+                    @click:append="togglePasswordVisibility" :type="showPassword ? 'text' : 'password'"
+                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" :rules="[passwordValidator]" />
             </template>
-            <chrome-nudge @selected="isOverlayOpen = false" />
+            <chrome-nudge @selected="onPasswordSelected" />
         </v-overlay>
         <v-text-field label="Confirm Password" v-model="confirmPassword" type="password" />
         <v-btn @click="register" color="primary">
@@ -20,6 +22,7 @@ import { ref } from 'vue'
 import useState from '../composables/state'
 
 const isOverlayOpen = ref(false)
+const showPassword = ref(false)
 
 const email = ref('')
 const password = ref('')
@@ -60,6 +63,16 @@ function validate3C12(password) {
 
     // Validate the password length and character class count
     return password.length >= 12 && classCount >= 3;
+}
+
+function onPasswordSelected(selectedPassword: string) {
+    password.value = selectedPassword
+    isOverlayOpen.value = false
+}
+
+function togglePasswordVisibility(e: Event) {
+    e.stopPropagation()
+    showPassword.value = !showPassword.value
 }
 </script>
 
