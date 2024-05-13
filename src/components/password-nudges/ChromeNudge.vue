@@ -1,16 +1,24 @@
 <template>
-    <div class="chrome-nudge">
-        <div class="top-row" @click="emitPassword">
-            <img class="key-image" src="/key.svg" />
-            <div class="top-text">
-                <div>Use strong password</div>
-                <div class="generated-password">{{ password }}</div>
-            </div>
+  <div class="chrome-nudge">
+    <div
+      class="top-row"
+      @click="emitPassword"
+    >
+      <img
+        class="key-image"
+        src="/key.svg"
+      >
+      <div class="top-text">
+        <div>Use strong password</div>
+        <div class="generated-password">
+          {{ password }}
         </div>
-        <div class="bottom-row">
-            You don't need to remember this password. It will be saved to you Google Password Manager.
-        </div>
+      </div>
     </div>
+    <div class="bottom-row">
+      You don't need to remember this password. It will be saved to you Google Password Manager.
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">

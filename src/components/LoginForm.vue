@@ -1,17 +1,31 @@
 <template>
-    <div class="login-form">
-        <h2>Login into your account</h2>
-        <v-text-field label="Email" v-model="email" type="email" />
-        <v-text-field label="Password" v-model="password" type="password" />
-        <div class="button-wrapper">
-            <v-btn @click="login" color="primary">
-                Login
-            </v-btn>
-            <v-btn @click="toRegister" color="primary">
-                Create account
-            </v-btn>
-        </div>
+  <div class="login-form">
+    <h2>Login into your account</h2>
+    <v-text-field
+      v-model="email"
+      label="Email"
+      type="email"
+    />
+    <v-text-field
+      v-model="password"
+      label="Password"
+      type="password"
+    />
+    <div class="button-wrapper">
+      <v-btn
+        color="primary"
+        @click="login"
+      >
+        Login
+      </v-btn>
+      <v-btn
+        color="primary"
+        @click="toRegister"
+      >
+        Create account
+      </v-btn>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">

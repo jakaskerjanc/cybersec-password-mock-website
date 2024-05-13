@@ -1,9 +1,9 @@
 
 <template>
-    <div class="login-page">
-        <RegisterForm v-if="isRegistering" />
-        <LoginForm  v-else/>
-    </div>
+  <div class="login-page">
+    <RegisterForm v-if="isRegistering" />
+    <LoginForm v-else />
+  </div>
 </template>
 
 <script setup lang="ts">
