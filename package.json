@@ -1,6 +1,8 @@
 {
   "name": "cybersec-password-mock-website",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "description": "A mock website for a cyber security password manager",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
