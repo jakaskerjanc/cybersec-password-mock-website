@@ -1,13 +1,13 @@
 <template>
     <div class="chrome-nudge">
-        <div class="top" @click="emits('selected')">
+        <div class="top-row" @click="emits('selected')">
             <img class="key-image" src="/key.svg" />
             <div class="top-text">
                 <div>Use strong password</div>
-                <div class="password">34z*4f/j%DXYd</div>
+                <div class="generated-password">34z*4f/j%DXYd</div>
             </div>
         </div>
-        <div class="bottom">
+        <div class="bottom-row">
             You don't need to remember this password. It will be saved to you Google Password Manager.
         </div>
     </div>
@@ -17,27 +17,33 @@
 const emits = defineEmits(['selected'])
 </script>
 
-<style scoped>
+<style scoped lang="less">
+@background-black: #1E1E1E;
+@background-hover-black: #2F2F2F;
+@white-text: #FFFFFF;
+@gray-text: #C7C7C7;
+@bottom-border-color: #5E5E5E;
+
 .chrome-nudge {
     width: 500px;
     height: 138px;
     border-radius: 10px;
-    background-color: #1F1F1F;
-    color: white;
+    background-color: @background-black;
+    color: @white-text;
     user-select: none;
 }
 
-.top {
+.top-row {
     height: 56px;
     padding-left: 16px;
     display: flex;
-    border-bottom: 1px solid #5E5E5E;
+    border-bottom: 1px solid @bottom-border-color;
     align-items: center;
-}
 
-.top:hover {
-    background-color: #2F2F2F;
-    border-radius: 10px 10px 0 0;
+    &:hover {
+        background-color: @background-hover-black;
+        border-radius: 10px 10px 0 0;
+    }
 }
 
 .top-text {
@@ -50,19 +56,19 @@ const emits = defineEmits(['selected'])
 .key-image {
     width: 24px;
     height: 24px;
-    color: white;
+    color: @white-text;
     margin-right: 16px;
 }
 
-.bottom {
+.generated-password {
+    color: @gray-text;
+}
+
+.bottom-row {
     height: 82px;
     padding-left: 16px;
     display: flex;
     align-items: center;
-    color: #C7C7C7;
-}
-
-.password {
-    color: #C7C7C7;
+    color: @gray-text;
 }
 </style>
