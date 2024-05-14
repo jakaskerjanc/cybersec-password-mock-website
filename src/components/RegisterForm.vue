@@ -34,7 +34,9 @@
     <v-text-field
       v-model="confirmPassword"
       label="Confirm Password"
-      type="password"
+      :type="showConfirmPassword ? 'text' : 'password'"
+      :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
+      @click:append="showConfirmPassword = !showConfirmPassword"
     />
     <v-btn
       color="primary"
@@ -53,6 +55,7 @@ import { generateRandomPassword } from '../composables/utils'
 
 const isOverlayOpen = ref(false)
 const showPassword = ref(false)
+const showConfirmPassword = ref(false)
 const generatedPasswordSelected = ref(false)
 
 const email = ref('')
@@ -103,6 +106,7 @@ function validate3C12(password: string) {
 
 function onPasswordSelected() {
   password.value = generatedPassword.value
+  confirmPassword.value = generatedPassword.value
   showPassword.value = false
   isOverlayOpen.value = false
   generatedPasswordSelected.value = true
