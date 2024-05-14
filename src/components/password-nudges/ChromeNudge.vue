@@ -1,4 +1,5 @@
 <template>
+  <div class="arrow-up" />
   <div class="chrome-nudge">
     <div
       class="top-row"
@@ -31,9 +32,6 @@ const emit = defineEmits<{
   hovered: [isHovered: boolean]
 }>()
 
-// const password = generateRandomPassword()
-
-
 function onSelected() {
   emit('selected')
 }
@@ -49,6 +47,19 @@ function onHover(isHover: boolean) {
 @white-text: #FFFFFF;
 @gray-text: #C7C7C7;
 @bottom-border-color: #5E5E5E;
+
+.arrow-up {
+  @arrow-size: 8px;
+  width: 0;
+  height: 0;
+  border-left: @arrow-size solid transparent;
+  border-right: @arrow-size solid transparent;
+  border-bottom: @arrow-size solid @background-black;
+
+  position: absolute;
+  margin-left: 24px;
+  margin-top: -8px;
+}
 
 .chrome-nudge {
   width: 500px;

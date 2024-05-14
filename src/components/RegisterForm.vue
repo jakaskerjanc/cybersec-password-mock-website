@@ -135,10 +135,16 @@ function onPasswordTyped(typedPassword: string) {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .register-form {
   display: flex;
   flex-direction: column;
-  width: 450px;
+  width: 500px;
+
+  ::v-deep(.v-input__details) {
+    .v-messages__message {
+      padding-bottom: 6px;
+    }
+  }
 }
 </style>
