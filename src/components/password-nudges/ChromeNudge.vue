@@ -2,7 +2,9 @@
   <div class="chrome-nudge">
     <div
       class="top-row"
-      @click="emitPassword"
+      @click="onSelected"
+      @mouseenter="() => onHover(true)"
+      @mouseleave="() => onHover(false)"
     >
       <img
         class="key-image"
@@ -16,22 +18,28 @@
       </div>
     </div>
     <div class="bottom-row">
-      You don't need to remember this password. It will be saved to you Google Password Manager.
+      You don't need to remember this password. It will be saved to your Google Password Manager.
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { generateRandomPassword } from '../../composables/utils'
+const password = defineModel('password', { type: String, default: '' })
 
 const emit = defineEmits<{
-  selected: [value: string]
+  selected: [],
+  hovered: [isHovered: boolean]
 }>()
 
-const password = generateRandomPassword()
+// const password = generateRandomPassword()
 
-function emitPassword() {
-  emit('selected', password)
+
+function onSelected() {
+  emit('selected')
+}
+
+function onHover(isHover: boolean) {
+  emit('hovered', isHover)
 }
 </script>
 

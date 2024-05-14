@@ -15,15 +15,21 @@
       <template #activator="{ props }">
         <v-text-field
           v-bind="props"
-          v-model="password"
+          :model-value="password"
           label="Password"
           :type="showPassword ? 'text' : 'password'"
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           :rules="[passwordValidator]"
+          validate-on="blur"
+          @update:model-value="onPasswordTyped"
           @click:append="togglePasswordVisibility"
         />
       </template>
-      <chrome-nudge @selected="onPasswordSelected" />
+      <chrome-nudge
+        v-model:password="generatedPassword"
+        @selected="onPasswordSelected"
+        @hovered="onPasswordNudgeHovered"
+      />
     </v-overlay>
     <v-text-field
       v-model="confirmPassword"
@@ -40,17 +46,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import useState from '../composables/state'
+import { generateRandomPassword } from '../composables/utils'
+
 
 const isOverlayOpen = ref(false)
 const showPassword = ref(false)
+const generatedPasswordSelected = ref(false)
 
 const email = ref('')
 const password = ref('')
+const generatedPassword = ref('')
 const confirmPassword = ref('')
 
 const { isRegistering, passwordPolicy } = useState
+
+onMounted(() => {
+  generatedPassword.value = generateRandomPassword()
+})
 
 function register() {
   // Register the user
@@ -87,14 +101,37 @@ function validate3C12(password: string) {
   return password.length >= 12 && classCount >= 3;
 }
 
-function onPasswordSelected(selectedPassword: string) {
-  password.value = selectedPassword
+function onPasswordSelected() {
+  password.value = generatedPassword.value
+  showPassword.value = false
   isOverlayOpen.value = false
+  generatedPasswordSelected.value = true
 }
 
 function togglePasswordVisibility(e: Event) {
   e.stopPropagation()
   showPassword.value = !showPassword.value
+}
+
+function onPasswordNudgeHovered(isHovered: boolean) {
+  password.value = isHovered ? generatedPassword.value : ''
+  showPassword.value = isHovered
+}
+
+function onPasswordTyped(typedPassword: string) {
+  // Update generated password if user changes it a bit or
+  // regenerate password in nudges if user makes it too short
+  if (generatedPasswordSelected.value) {
+    if (typedPassword.length < 5) {
+      generatedPasswordSelected.value = false
+      generatedPassword.value = generateRandomPassword()
+    } else {
+      generatedPassword.value = typedPassword
+    }
+    password.value = typedPassword
+  } else {
+    password.value = typedPassword
+  }
 }
 </script>
 
