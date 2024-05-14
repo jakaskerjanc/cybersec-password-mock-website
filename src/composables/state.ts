@@ -7,9 +7,13 @@ export default (function () {
 
     const isRegistering = ref(false)
 
+    const accountPassword = ref<string | null>(null)
+    const accountEmail = ref<string | null>(null)
 
     return {
         isRegistering,
         passwordPolicy,
+        accountPassword,
+        accountEmail
     }
   })()  

@@ -35,14 +35,20 @@ import useState from '../composables/state'
 const email = ref('')
 const password = ref('')
 
-const { isRegistering } = useState
+const { isRegistering, accountPassword, accountEmail } = useState
+
 
 function toRegister() {
     isRegistering.value = true
 }
 
 function login() {
-    console.log('Logging in...')
+  if (!email.value) return
+  if (!password.value) return
+  if (email.value !== accountEmail.value) return
+  if (password.value !== accountPassword.value) return
+
+  alert('Logged in!')
 }
 </script>
 

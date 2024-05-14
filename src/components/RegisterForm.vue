@@ -63,15 +63,23 @@ const password = ref('')
 const generatedPassword = ref('')
 const confirmPassword = ref('')
 
-const { isRegistering, passwordPolicy } = useState
+const { isRegistering, passwordPolicy, accountPassword, accountEmail } = useState
 
 onMounted(() => {
   generatedPassword.value = generateRandomPassword()
 })
 
 function register() {
-  // Register the user
-
+  if (!email.value ||
+    !password.value ||
+    !confirmPassword.value ||
+    password.value !== confirmPassword.value ||
+    !passwordValidator(password.value)) {
+    alert('Error while registering!')
+    return
+  }
+  accountPassword.value = password.value
+  accountEmail.value = email.value
   isRegistering.value = false
 }
 
