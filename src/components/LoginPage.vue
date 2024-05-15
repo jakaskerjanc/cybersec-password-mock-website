@@ -1,15 +1,15 @@
 
 <template>
   <div class="login-page">
-    <RegisterForm v-if="isRegistering" />
-    <LoginForm v-else />
+    <RegisterForm v-if="currentPage=== 'Register'" />
+    <LoginForm v-if="currentPage=== 'Login'" />
   </div>
 </template>
 
 <script setup lang="ts">
 import useState from '../composables/state'
 
-const { isRegistering } = useState
+const { currentPage } = useState
 </script>
 
 <style scoped>
@@ -17,6 +17,6 @@ const { isRegistering } = useState
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh - 64px);
 }
 </style>

@@ -5,13 +5,14 @@ export default (function () {
     const passwordPolicies : Array<PasswordPolicy> = ['1C8', '3C12']
     const passwordPolicy = ref<PasswordPolicy>(passwordPolicies[1])
 
-    const isRegistering = ref(false)
+    type Page = 'Landing' | 'Login' | 'Register'
+    const currentPage = ref<Page>('Landing')
 
     const accountPassword = ref<string | null>(null)
     const accountEmail = ref<string | null>(null)
 
     return {
-        isRegistering,
+        currentPage,
         passwordPolicy,
         accountPassword,
         accountEmail

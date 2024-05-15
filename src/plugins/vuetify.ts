@@ -16,10 +16,10 @@ import { createVuetify } from 'vuetify'
 const isDeviceDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
 export default createVuetify({
   theme: {
-    defaultTheme: isDeviceDarkTheme ? 'dark' : 'light',
+    defaultTheme: isDeviceDarkTheme ? 'myDark' : 'light',
     themes: {
-      dark: {
-        dark: true,
+      myDark: {
+        dark: false,
         colors: {
           "chrome-background": '#1E1E1E',
           "chrome-background-hover": '#2F2F2F',

@@ -58,25 +58,24 @@ function onHover(isHover: boolean) {
   width: 500px;
   height: 138px;
   border-radius: 10px;
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
   background-color: rgb(var(--v-theme-chrome-background));
-  color: rgb(var(--v-theme-ligher-text));
+  color: rgb(var(--v-theme-chrome-lighter-text));
   user-select: none;
   box-shadow: var(--v-chrome-box-shadow);
-
-  /* Use default system font */
-  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .top-row {
   height: 56px;
   padding-left: 16px;
   display: flex;
-  border-bottom: 1px solid rgb(var(--v-theme-chrome-bottom-border));
   align-items: center;
+  border-bottom: 1px solid rgb(var(--v-theme-chrome-bottom-border));
 
   &:hover {
-    background-color: rgb(var(--v-theme-chrome-background-hover));
     border-radius: 10px 10px 0 0;
+    background-color: rgb(var(--v-theme-chrome-background-hover));
   }
 }
 
@@ -88,7 +87,7 @@ function onHover(isHover: boolean) {
 }
 
 .generated-password {
-  color: rgb(var(--v-theme-ligher-text));
+  color: rgb(var(--v-theme-chrome-lighter-text));
 }
 
 .bottom-row {
@@ -96,6 +95,6 @@ function onHover(isHover: boolean) {
   padding-left: 16px;
   display: flex;
   align-items: center;
-  color: rgb(var(--v-theme-darker-text));;
+  color: rgb(var(--v-theme-chrome-darker-text));;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="register-form">
-    <h2>Create your account</h2>
+    <h2>Create your account with Odense Fresh</h2>
     <v-text-field
       v-model="email"
       label="Email"
@@ -38,12 +38,20 @@
       :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
       @click:append="showConfirmPassword = !showConfirmPassword"
     />
-    <v-btn
-      color="primary"
-      @click="register"
-    >
-      Register
-    </v-btn>
+    <div class="button-wrapper">
+      <v-btn
+        color="primary"
+        @click="register"
+      >
+        Register
+      </v-btn>
+      <v-btn
+        color="primary"
+        @click="toLanding"
+      >
+        Back
+      </v-btn>
+    </div>
   </div>
 </template>
 
@@ -63,7 +71,7 @@ const password = ref('')
 const generatedPassword = ref('')
 const confirmPassword = ref('')
 
-const { isRegistering, passwordPolicy, accountPassword, accountEmail } = useState
+const { currentPage, passwordPolicy, accountPassword, accountEmail } = useState
 
 onMounted(() => {
   generatedPassword.value = generateRandomPassword()
@@ -80,7 +88,7 @@ function register() {
   }
   accountPassword.value = password.value
   accountEmail.value = email.value
-  isRegistering.value = false
+  currentPage.value = 'Login'
 }
 
 function passwordValidator(passwordInput: string) {
@@ -145,6 +153,10 @@ function onPasswordTyped(typedPassword: string) {
     password.value = typedPassword
   }
 }
+
+function toLanding() {
+    currentPage.value = 'Landing'
+}
 </script>
 
 <style scoped lang="less">
@@ -158,5 +170,11 @@ function onPasswordTyped(typedPassword: string) {
       padding-bottom: 6px;
     }
   }
+}
+
+.button-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 </style>

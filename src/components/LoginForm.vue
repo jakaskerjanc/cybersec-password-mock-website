@@ -1,6 +1,6 @@
 <template>
   <div class="login-form">
-    <h2>Login into your account</h2>
+    <h2>Login into your Odense Fresh account</h2>
     <v-text-field
       v-model="email"
       label="Email"
@@ -24,6 +24,12 @@
       >
         Create account
       </v-btn>
+      <v-btn
+        color="primary"
+        @click="toLanding"
+      >
+        Back to home
+      </v-btn>
     </div>
   </div>
 </template>
@@ -35,11 +41,15 @@ import useState from '../composables/state'
 const email = ref('')
 const password = ref('')
 
-const { isRegistering, accountPassword, accountEmail } = useState
+const { currentPage, accountPassword, accountEmail } = useState
 
 
 function toRegister() {
-    isRegistering.value = true
+    currentPage.value = 'Register'
+}
+
+function toLanding() {
+    currentPage.value = 'Landing'
 }
 
 function login() {
