@@ -7,10 +7,7 @@
       @mouseenter="() => onHover(true)"
       @mouseleave="() => onHover(false)"
     >
-      <img
-        class="key-image"
-        src="/key.svg"
-      >
+      <ChromeKey />
       <div class="top-text">
         <div>Use strong password</div>
         <div class="generated-password">
@@ -25,6 +22,8 @@
 </template>
 
 <script setup lang="ts">
+import ChromeKey from './ChromeKey.vue';
+
 const password = defineModel('password', { type: String, default: '' })
 
 const emit = defineEmits<{
@@ -42,19 +41,13 @@ function onHover(isHover: boolean) {
 </script>
 
 <style scoped lang="less">
-@background-black: #1E1E1E;
-@background-hover-black: #2F2F2F;
-@white-text: #FFFFFF;
-@gray-text: #C7C7C7;
-@bottom-border-color: #5E5E5E;
-
 .arrow-up {
   @arrow-size: 8px;
   width: 0;
   height: 0;
   border-left: @arrow-size solid transparent;
   border-right: @arrow-size solid transparent;
-  border-bottom: @arrow-size solid @background-black;
+  border-bottom: @arrow-size solid rgb(var(--v-theme-chrome-background));
 
   position: absolute;
   margin-left: 24px;
@@ -65,20 +58,21 @@ function onHover(isHover: boolean) {
   width: 500px;
   height: 138px;
   border-radius: 10px;
-  background-color: @background-black;
-  color: @white-text;
+  background-color: rgb(var(--v-theme-chrome-background));
+  color: rgb(var(--v-theme-ligher-text));
   user-select: none;
+  box-shadow: var(--v-chrome-box-shadow);
 }
 
 .top-row {
   height: 56px;
   padding-left: 16px;
   display: flex;
-  border-bottom: 1px solid @bottom-border-color;
+  border-bottom: 1px solid rgb(var(--v-theme-chrome-bottom-border));
   align-items: center;
 
   &:hover {
-    background-color: @background-hover-black;
+    background-color: rgb(var(--v-theme-chrome-background-hover));
     border-radius: 10px 10px 0 0;
   }
 }
@@ -90,15 +84,8 @@ function onHover(isHover: boolean) {
   padding-right: 24px;
 }
 
-.key-image {
-  width: 24px;
-  height: 24px;
-  color: @white-text;
-  margin-right: 16px;
-}
-
 .generated-password {
-  color: @gray-text;
+  color: rgb(var(--v-theme-ligher-text));
 }
 
 .bottom-row {
@@ -106,6 +93,6 @@ function onHover(isHover: boolean) {
   padding-left: 16px;
   display: flex;
   align-items: center;
-  color: @gray-text;
+  color: rgb(var(--v-theme-darker-text));;
 }
 </style>
