@@ -62,6 +62,9 @@ function onHover(isHover: boolean) {
   color: rgb(var(--v-theme-ligher-text));
   user-select: none;
   box-shadow: var(--v-chrome-box-shadow);
+
+  /* Use default system font */
+  font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 .top-row {
