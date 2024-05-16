@@ -25,7 +25,10 @@
           @click:append="togglePasswordVisibility"
         />
       </template>
+      <template v-if="browserName === 'firefox'" />
+      <template v-else-if="browserName === 'safari'" />
       <chrome-nudge
+        v-else
         v-model:password="generatedPassword"
         @selected="onPasswordSelected"
         @hovered="onPasswordNudgeHovered"
@@ -56,10 +59,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import useState from '../composables/state'
 import { generateRandomPassword } from '../composables/utils'
+import { detect } from 'detect-browser'
 
+const browser = detect()
+const browserName = computed(() => browser ? browser.name : '')
 
 const isOverlayOpen = ref(false)
 const showPassword = ref(false)
