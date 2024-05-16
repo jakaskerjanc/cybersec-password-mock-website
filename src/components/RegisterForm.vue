@@ -13,12 +13,13 @@
       :scrim="false"
       location-strategy="connected"
       scroll-strategy="reposition"
+      :location="overlayLocation"
     >
       <template #activator="{ props }">
         <v-text-field
           v-bind="props"
           :model-value="password"
-          :class="{ 'hide-password': !showPassword}"
+          :class="{ 'hide-password': !showPassword }"
           label="Password"
           type="text"
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -32,7 +33,12 @@
         />
       </template>
       <template v-if="browserName === 'firefox'" />
-      <template v-else-if="browserName === 'safari'" />
+      <safari-nudge
+        v-else-if="browserName === 'safari'"
+        v-model:password="generatedPassword"
+        @selected="onPasswordSelected"
+        @hovered="onPasswordNudgeHovered"
+      />
       <chrome-nudge
         v-else
         v-model:password="generatedPassword"
@@ -89,6 +95,16 @@ const { currentPage, passwordPolicy, accountPassword, accountEmail } = useState
 
 onMounted(() => {
   generatedPassword.value = generateRandomPassword()
+})
+
+const overlayLocation = computed(() => {
+  if (browserName.value === 'chrome') {
+    return 'bottom center'
+  } else if (browserName.value === 'safari') {
+    return 'end center'
+  } else if (browserName.value === 'firefox'){
+    return 'bottom center'
+  }
 })
 
 function register() {

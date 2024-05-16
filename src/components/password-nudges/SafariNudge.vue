@@ -1,5 +1,5 @@
 <template>
-  <div class="arrow-up" />
+  <div class="arrow-left" />
   <div class="safari-nudge">
     <div class="top-row">
       <SafariKey />
@@ -54,7 +54,7 @@ function onHover(isHover: boolean) {
 @gray-text: #c7c7c7;
 @bottom-border-color: #5e5e5e;
 
-.arrow-up {
+.arrow-left {
 	@arrow-size: 12px;
 	width: 0;
 	height: 0;
@@ -74,6 +74,7 @@ function onHover(isHover: boolean) {
 	background-color: #F0F0F1;
 	color: #5e5e5e;
 	user-select: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .top-row {
@@ -115,7 +116,7 @@ function onHover(isHover: boolean) {
     padding-right: 10px;
     color: #ffffff;
     font-size: 14px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .other-button {
@@ -132,6 +133,4 @@ function onHover(isHover: boolean) {
     border-radius: 8px;
     margin-left: 8px;
 }
-
-
 </style>
