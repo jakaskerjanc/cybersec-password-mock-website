@@ -23,6 +23,9 @@
           validate-on="blur"
           @update:model-value="onPasswordTyped"
           @click:append="togglePasswordVisibility"
+          @focus="isOverlayOpen = true"
+          @blur="isOverlayOpen = false"
+          @click.stop="isOverlayOpen = !isOverlayOpen"
         />
       </template>
       <template v-if="browserName === 'firefox'" />
