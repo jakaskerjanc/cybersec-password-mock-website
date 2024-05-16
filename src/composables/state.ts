@@ -15,6 +15,13 @@ export default (function () {
         currentPage,
         passwordPolicy,
         accountPassword,
-        accountEmail
+        accountEmail,
+        togglePasswordPolicy
+    }
+
+    function togglePasswordPolicy() {
+        const currentIndex = passwordPolicies.indexOf(passwordPolicy.value)
+        const nextIndex = (currentIndex + 1) % passwordPolicies.length
+        passwordPolicy.value = passwordPolicies[nextIndex]
     }
   })()  
