@@ -13,5 +13,7 @@ declare module 'vue' {
     LoginForm: typeof import('./src/components/LoginForm.vue')['default']
     LoginPage: typeof import('./src/components/LoginPage.vue')['default']
     RegisterForm: typeof import('./src/components/RegisterForm.vue')['default']
+    SafariKey: typeof import('./src/components/password-nudges/SafariKey.vue')['default']
+    SafariNudge: typeof import('./src/components/password-nudges/SafariNudge.vue')['default']
   }
 }
