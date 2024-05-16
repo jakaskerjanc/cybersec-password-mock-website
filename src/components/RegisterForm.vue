@@ -25,6 +25,7 @@
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           :rules="[passwordValidator]"
           validate-on="blur"
+          :bg-color="fieldBackgroundColor"
           @update:model-value="onPasswordTyped"
           @click:append="togglePasswordVisibility"
           @focus="isOverlayOpen = true"
@@ -38,6 +39,7 @@
         v-model:password="generatedPassword"
         @selected="onPasswordSelected"
         @hovered="onPasswordNudgeHovered"
+        @mounted="onPasswordNudgeMounted"
       />
       <chrome-nudge
         v-else
@@ -52,6 +54,7 @@
       :class="{ 'hide-password': !showConfirmPassword}"
       type="text"
       :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
+      :bg-color="fieldBackgroundColor"
       @click:append="showConfirmPassword = !showConfirmPassword"
     />
     <div class="button-wrapper">
@@ -91,6 +94,8 @@ const password = ref('')
 const generatedPassword = ref('')
 const confirmPassword = ref('')
 
+const fieldBackgroundColor = ref()
+
 const { currentPage, passwordPolicy, accountPassword, accountEmail } = useState
 
 onMounted(() => {
@@ -98,11 +103,10 @@ onMounted(() => {
 })
 
 const overlayLocation = computed(() => {
-  if (browserName.value === 'chrome') {
-    return 'bottom center'
-  } else if (browserName.value === 'safari') {
+   if (browserName.value === 'safari') {
     return 'end center'
-  } else if (browserName.value === 'firefox'){
+  } else
+  {
     return 'bottom center'
   }
 })
@@ -153,7 +157,14 @@ function validate3C12(password: string) {
 function onPasswordSelected() {
   password.value = generatedPassword.value
   confirmPassword.value = generatedPassword.value
+  if(browserName.value === 'safari') {
+    showPassword.value = true
+    showConfirmPassword.value = true
+  }
+  else {
   showPassword.value = false
+    showConfirmPassword.value = false
+  }
   isOverlayOpen.value = false
   generatedPasswordSelected.value = true
 }
@@ -172,6 +183,14 @@ function onPasswordNudgeHovered(isHovered: boolean) {
     password.value = oldPasswordBeforeHover.value
     showPassword.value = false
   }
+}
+
+function onPasswordNudgeMounted() {
+    showPassword.value = true
+    showConfirmPassword.value = true
+    fieldBackgroundColor.value = "#FAFFBD"
+    password.value = generatedPassword.value
+    confirmPassword.value = generatedPassword.value
 }
 
 function onPasswordTyped(typedPassword: string) {

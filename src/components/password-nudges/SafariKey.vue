@@ -1,5 +1,6 @@
 <template>
   <svg
+    class="key-image"
     width="38"
     height="38"
     viewBox="4 0 24 24"

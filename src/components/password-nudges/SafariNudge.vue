@@ -31,12 +31,17 @@
 </template>
 
 <script setup lang="ts">
-const password = defineModel("password", { type: String, default: "" });
+import { onMounted } from 'vue';
 
 const emit = defineEmits<{
 	selected: [];
+  mounted: [];
 	hovered: [isHovered: boolean];
 }>();
+
+onMounted(() => {
+  emit("mounted");
+});
 
 function onSelected() {
 	emit("selected");
@@ -91,10 +96,6 @@ function onHover(isHover: boolean) {
 	width: 100%;
 	padding-right: 32px;
 	font-size: 14px;
-}
-
-.generated-password {
-	color: @gray-text;
 }
 
 .bottom-row {
