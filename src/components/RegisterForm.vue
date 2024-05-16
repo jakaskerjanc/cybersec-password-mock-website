@@ -16,8 +16,9 @@
         <v-text-field
           v-bind="props"
           :model-value="password"
+          :class="{ 'hide-password': !showPassword}"
           label="Password"
-          :type="showPassword ? 'text' : 'password'"
+          type="text"
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           :rules="[passwordValidator]"
           validate-on="blur"
@@ -40,7 +41,8 @@
     <v-text-field
       v-model="confirmPassword"
       label="Confirm Password"
-      :type="showConfirmPassword ? 'text' : 'password'"
+      :class="{ 'hide-password': !showConfirmPassword}"
+      type="text"
       :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
       @click:append="showConfirmPassword = !showConfirmPassword"
     />
@@ -169,6 +171,18 @@ function toLanding() {
 </script>
 
 <style scoped lang="less">
+@font-face{
+  font-family: text-security-disc;
+  src: url("https://raw.githubusercontent.com/noppa/text-security/master/dist/text-security-disc.woff");
+}
+
+.hide-password {
+  ::v-deep(input) {
+    -webkit-text-security: disc;
+    font-family: text-security-disc;
+  }
+}
+
 .register-form {
   display: flex;
   flex-direction: column;
