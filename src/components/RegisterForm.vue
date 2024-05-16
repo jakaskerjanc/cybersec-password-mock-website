@@ -78,6 +78,7 @@ const isOverlayOpen = ref(false)
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
 const generatedPasswordSelected = ref(false)
+const oldPasswordBeforeHover = ref('')
 
 const email = ref('')
 const password = ref('')
@@ -147,8 +148,14 @@ function togglePasswordVisibility(e: Event) {
 }
 
 function onPasswordNudgeHovered(isHovered: boolean) {
-  password.value = isHovered ? generatedPassword.value : ''
-  showPassword.value = isHovered
+  if (isHovered) {
+    oldPasswordBeforeHover.value = password.value
+    password.value = generatedPassword.value
+    showPassword.value = true
+  } else {
+    password.value = oldPasswordBeforeHover.value
+    showPassword.value = false
+  }
 }
 
 function onPasswordTyped(typedPassword: string) {
