@@ -1,6 +1,8 @@
 <template>
   <div class="login-form">
-    <h2>Login into your Odense Fresh account</h2>
+    <h2 class="pb-3">
+      Login into your Odense Fresh account
+    </h2>
     <v-text-field
       v-model="email"
       label="Email"

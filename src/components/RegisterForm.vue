@@ -1,6 +1,8 @@
 <template>
   <div class="register-form">
-    <h2>Create your account with Odense Fresh</h2>
+    <h2 class="pb-3">
+      Create your account with Odense Fresh
+    </h2>
     <v-text-field
       v-model="email"
       label="Email"
