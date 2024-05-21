@@ -13,26 +13,40 @@
       :scrim="false"
       location-strategy="connected"
       scroll-strategy="reposition"
+      :location="overlayLocation"
     >
       <template #activator="{ props }">
         <v-text-field
           v-bind="props"
           :model-value="password"
-          :class="{ 'hide-password': !showPassword}"
+          :class="{ 'hide-password': !showPassword }"
           label="Password"
           type="text"
           :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           :rules="[passwordValidator]"
           validate-on="blur"
+          :bg-color="fieldBackgroundColor"
           @update:model-value="onPasswordTyped"
           @click:append="togglePasswordVisibility"
-          @focus="isOverlayOpen = true"
+          @focus="isOverlayOpen = !disableNudge && true"
           @blur="isOverlayOpen = false"
           @click.stop="isOverlayOpen = !isOverlayOpen"
         />
       </template>
-      <template v-if="browserName === 'firefox'" />
-      <template v-else-if="browserName === 'safari'" />
+      <firefox-nudge
+        v-if="browserName === 'firefox'"
+        v-model:password="generatedPassword"
+        @selected="onPasswordSelected"
+        @hovered="onPasswordNudgeHovered"
+        @mounted="onPasswordNudgeMounted"
+      />
+      <safari-nudge
+        v-else-if="browserName === 'safari'"
+        @selected="onPasswordSelected"
+        @hovered="onPasswordNudgeHovered"
+        @mounted="onPasswordNudgeMounted"
+        @own="onOwnPasswordSelected"
+      />
       <chrome-nudge
         v-else
         v-model:password="generatedPassword"
@@ -46,7 +60,9 @@
       :class="{ 'hide-password': !showConfirmPassword}"
       type="text"
       :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
+      :bg-color="fieldBackgroundColor"
       @click:append="showConfirmPassword = !showConfirmPassword"
+      @focus="disableNudge = false"
     />
     <div class="button-wrapper">
       <v-btn
@@ -74,6 +90,7 @@ import { detect } from 'detect-browser'
 const browser = detect()
 const browserName = computed(() => browser ? browser.name : '')
 
+const disableNudge = ref(false)
 const isOverlayOpen = ref(false)
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
@@ -85,10 +102,20 @@ const password = ref('')
 const generatedPassword = ref('')
 const confirmPassword = ref('')
 
+const fieldBackgroundColor = ref()
+
 const { currentPage, passwordPolicy, accountPassword, accountEmail } = useState
 
 onMounted(() => {
   generatedPassword.value = generateRandomPassword()
+})
+
+const overlayLocation = computed(() => {
+  if (browserName.value === 'safari') {
+    return 'end center'
+  } else {
+    return 'bottom center'
+  }
 })
 
 function register() {
@@ -137,9 +164,34 @@ function validate3C12(password: string) {
 function onPasswordSelected() {
   password.value = generatedPassword.value
   confirmPassword.value = generatedPassword.value
-  showPassword.value = false
+  if (browserName.value === 'safari' && !disableNudge) {
+    showPassword.value = true
+    showConfirmPassword.value = true
+  }
+  else {
+    showPassword.value = false
+    showConfirmPassword.value = false
+  }
+  if (browserName.value === 'firefox') {
+    fieldBackgroundColor.value = "#FAFFBD";
+  }
   isOverlayOpen.value = false
   generatedPasswordSelected.value = true
+}
+
+function onOwnPasswordSelected() {
+  password.value = ""
+  confirmPassword.value = ""
+  showPassword.value = false
+  showConfirmPassword.value = false
+  fieldBackgroundColor.value = ""
+  generatedPasswordSelected.value = false
+  isOverlayOpen.value = false
+  disableNudge.value = true
+  setTimeout(() => {
+    const passwordElement = document.querySelector('input[type="text"]') as HTMLInputElement;
+    passwordElement?.focus()
+  }, 0)
 }
 
 function togglePasswordVisibility(e: Event) {
@@ -156,6 +208,14 @@ function onPasswordNudgeHovered(isHovered: boolean) {
     password.value = oldPasswordBeforeHover.value
     showPassword.value = false
   }
+}
+
+function onPasswordNudgeMounted() {
+  showPassword.value = true
+  showConfirmPassword.value = true
+  fieldBackgroundColor.value = "#FAFFBD"
+  password.value = generatedPassword.value
+  confirmPassword.value = generatedPassword.value
 }
 
 function onPasswordTyped(typedPassword: string) {
@@ -175,7 +235,7 @@ function onPasswordTyped(typedPassword: string) {
 }
 
 function toLanding() {
-    currentPage.value = 'Landing'
+  currentPage.value = 'Landing'
 }
 </script>
 
@@ -205,8 +265,8 @@ function toLanding() {
 }
 
 .button-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>
