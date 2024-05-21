@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     ChromeKey: typeof import('./src/components/password-nudges/ChromeKey.vue')['default']
     ChromeNudge: typeof import('./src/components/password-nudges/ChromeNudge.vue')['default']
+    FirefoxKey: typeof import('./src/components/password-nudges/FirefoxKey.vue')['default']
+    FirefoxNudge: typeof import('./src/components/password-nudges/FirefoxNudge.vue')['default']
     LandingPage: typeof import('./src/components/LandingPage.vue')['default']
     LoginForm: typeof import('./src/components/LoginForm.vue')['default']
     LoginPage: typeof import('./src/components/LoginPage.vue')['default']

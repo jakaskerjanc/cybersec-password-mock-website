@@ -33,9 +33,8 @@
           @click.stop="isOverlayOpen = !isOverlayOpen"
         />
       </template>
-      <template v-if="browserName === 'firefox'" />
-      <safari-nudge
-        v-else-if="browserName === 'safari'"
+      <firefox-nudge
+        v-if="browserName === 'firefox'"
         v-model:password="generatedPassword"
         @selected="onPasswordSelected"
         @hovered="onPasswordNudgeHovered"
@@ -112,7 +111,7 @@ onMounted(() => {
 })
 
 const overlayLocation = computed(() => {
-   if (browserName.value === 'safari') {
+  if (browserName.value === 'safari') {
     return 'end center'
   } else {
     return 'bottom center'
@@ -170,8 +169,11 @@ function onPasswordSelected() {
     showConfirmPassword.value = true
   }
   else {
-  showPassword.value = false
+    showPassword.value = false
     showConfirmPassword.value = false
+  }
+  if (browserName.value === 'firefox') {
+    fieldBackgroundColor.value = "#FAFFBD";
   }
   isOverlayOpen.value = false
   generatedPasswordSelected.value = true
@@ -209,11 +211,11 @@ function onPasswordNudgeHovered(isHovered: boolean) {
 }
 
 function onPasswordNudgeMounted() {
-    showPassword.value = true
-    showConfirmPassword.value = true
-    fieldBackgroundColor.value = "#FAFFBD"
-    password.value = generatedPassword.value
-    confirmPassword.value = generatedPassword.value
+  showPassword.value = true
+  showConfirmPassword.value = true
+  fieldBackgroundColor.value = "#FAFFBD"
+  password.value = generatedPassword.value
+  confirmPassword.value = generatedPassword.value
 }
 
 function onPasswordTyped(typedPassword: string) {
@@ -233,7 +235,7 @@ function onPasswordTyped(typedPassword: string) {
 }
 
 function toLanding() {
-    currentPage.value = 'Landing'
+  currentPage.value = 'Landing'
 }
 </script>
 
@@ -263,8 +265,8 @@ function toLanding() {
 }
 
 .button-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>
