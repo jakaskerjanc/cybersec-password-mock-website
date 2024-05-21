@@ -14,8 +14,11 @@
         System Settings or by asking Siri.
       </div>
       <div class="bottom-buttons">
-        <div class="other-button">
-          Other Options
+        <div
+          class="other-button"
+          @click="useOwnPassword"
+        >
+          Use Own Password
         </div>
         <div
           class="use-button"
@@ -36,6 +39,7 @@ import { onMounted } from 'vue';
 const emit = defineEmits<{
 	selected: [];
   mounted: [];
+  own: [];
 	hovered: [isHovered: boolean];
 }>();
 
@@ -49,6 +53,10 @@ function onSelected() {
 
 function onHover(isHover: boolean) {
 	emit("hovered", isHover);
+}
+
+function useOwnPassword() {
+  emit("own");
 }
 </script>
 
@@ -80,6 +88,11 @@ function onHover(isHover: boolean) {
 	color: #5e5e5e;
 	user-select: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    * {
+        user-select: none;
+    }
+
 }
 
 .top-row {
@@ -117,7 +130,6 @@ function onHover(isHover: boolean) {
     padding-right: 10px;
     color: #ffffff;
     font-size: 14px;
-    cursor: pointer;
 }
 
 .other-button {

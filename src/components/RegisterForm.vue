@@ -28,7 +28,7 @@
           :bg-color="fieldBackgroundColor"
           @update:model-value="onPasswordTyped"
           @click:append="togglePasswordVisibility"
-          @focus="isOverlayOpen = true"
+          @focus="isOverlayOpen = !disableNudge && true"
           @blur="isOverlayOpen = false"
           @click.stop="isOverlayOpen = !isOverlayOpen"
         />
@@ -40,6 +40,13 @@
         @selected="onPasswordSelected"
         @hovered="onPasswordNudgeHovered"
         @mounted="onPasswordNudgeMounted"
+      />
+      <safari-nudge
+        v-else-if="browserName === 'safari'"
+        @selected="onPasswordSelected"
+        @hovered="onPasswordNudgeHovered"
+        @mounted="onPasswordNudgeMounted"
+        @own="onOwnPasswordSelected"
       />
       <chrome-nudge
         v-else
@@ -56,6 +63,7 @@
       :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
       :bg-color="fieldBackgroundColor"
       @click:append="showConfirmPassword = !showConfirmPassword"
+      @focus="disableNudge = false"
     />
     <div class="button-wrapper">
       <v-btn
@@ -83,6 +91,7 @@ import { detect } from 'detect-browser'
 const browser = detect()
 const browserName = computed(() => browser ? browser.name : '')
 
+const disableNudge = ref(false)
 const isOverlayOpen = ref(false)
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
@@ -105,8 +114,7 @@ onMounted(() => {
 const overlayLocation = computed(() => {
    if (browserName.value === 'safari') {
     return 'end center'
-  } else
-  {
+  } else {
     return 'bottom center'
   }
 })
@@ -157,7 +165,7 @@ function validate3C12(password: string) {
 function onPasswordSelected() {
   password.value = generatedPassword.value
   confirmPassword.value = generatedPassword.value
-  if(browserName.value === 'safari') {
+  if (browserName.value === 'safari' && !disableNudge) {
     showPassword.value = true
     showConfirmPassword.value = true
   }
@@ -167,6 +175,21 @@ function onPasswordSelected() {
   }
   isOverlayOpen.value = false
   generatedPasswordSelected.value = true
+}
+
+function onOwnPasswordSelected() {
+  password.value = ""
+  confirmPassword.value = ""
+  showPassword.value = false
+  showConfirmPassword.value = false
+  fieldBackgroundColor.value = ""
+  generatedPasswordSelected.value = false
+  isOverlayOpen.value = false
+  disableNudge.value = true
+  setTimeout(() => {
+    const passwordElement = document.querySelector('input[type="text"]') as HTMLInputElement;
+    passwordElement?.focus()
+  }, 0)
 }
 
 function togglePasswordVisibility(e: Event) {
