@@ -8,6 +8,7 @@
         <v-btn> Categories </v-btn>
         <v-btn> Schedule </v-btn>
         <v-btn> About us </v-btn>
+        <v-btn href="https://forms.gle/zrfTvsQ2P6w8qqZY7"> Form </v-btn>
         <v-btn
           icon="mdi-cog"
           @click="onCogClick"
