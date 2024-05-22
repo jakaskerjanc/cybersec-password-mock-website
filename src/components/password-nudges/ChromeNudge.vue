@@ -88,6 +88,7 @@ function onHover(isHover: boolean) {
 
 .generated-password {
   color: rgb(var(--v-theme-chrome-lighter-text));
+  font-family: monospace;
 }
 
 .bottom-row {
